@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet"> 
+    <title>LD46</title>
+</head>
+<body>
+    <div class="container">
+        <div id="three-canvas">
+            <div class="content">
+                <div id="startMenu">
+                    <h1>RunZ</h1>
+                    <p>Stay alive and kill zombies !</p>
+                    <button id="controls">Start</button>
+                </div>
+                <div id="controlsMenu" style="display: none;">
+                    <p>[LEFT/RIGHT or A/D or Q/D] move sidways</p>
+                    <p>[E] Toggle flashlight</p>
+                    <p>[SPACE] SHOOT !!!</p>
+                    <button id="start">Start</button>
+                </div>
+                <div id="deadMenu" style="display: none;">
+                    <p>You died !</p>
+                    <p id="deathScore">Score: 0</p>
+                    <button id="restart">Restart</button>
+                </div>
+                <div id="game_center" style="display: none;">
+                    <p id="flashlight">[E] To toggle flashlight</p>
+                </div>
+            </div>
+        </div>
+        <div class="header" id="header" style="display: none;">
+            <p id="score" style="margin-bottom: 0px">Score: 0</p>
+            <p id="kills" style="margin: 0px">Kills: 0</p>
+            <p id="distance" style="margin: 0px">Distance: 0m</p>
+        </div>
+    </div>
+    <script src="js/Main.js"></script>
+</body>
+</html>

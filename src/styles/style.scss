@@ -1,0 +1,90 @@
+@font-face {
+    font-family: "alagard";
+    src: url("../assets/fonts/alagard.ttf");
+}
+
+body {
+    font-family: 'alagard', sans-serif;
+    color: white;
+}
+
+h1 {
+    font-weight: normal;
+}
+
+p {
+    font-size: 32px;
+}
+
+html {
+    background-color: black;
+}
+
+.container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    .header {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        padding: 0 40px;
+    }
+
+    #three-canvas {
+        position: absolute;
+        bottom: 0px;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+
+        .content {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+            font-family: "alagard";
+            
+            h1 {
+                font-weight: normal;
+                font-size: 54px;
+                color: red;
+            }
+            
+            p {
+                font-size: 32px;
+                font-weight: normal;
+            }
+            
+            button {
+                font-family: "alagard", sans-serif;
+                font-size: 32px;
+                padding: 10px 30px;
+                margin: 10px;
+                background-color: white;
+                border: 3px solid white;
+                // font-weight: bold;
+                color: black;
+                cursor: pointer;
+                
+                &:hover {
+                    background-color: black;
+                    font-weight: normal;
+                    color: white;
+                }
+
+                outline: none;
+            }
+        }
+    }
+}

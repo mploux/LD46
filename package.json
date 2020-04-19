@@ -1,0 +1,27 @@
+{
+  "name": "LD46",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "git@github.com:mploux/LD46.git",
+  "author": "mploux <mploux@student.42.fr>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "assemble": "~0.3.11",
+    "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
+    "dotenv": "^8.2.0",
+    "grunt": "~0.4.0",
+    "js": "^0.1.0",
+    "parcel": "^1.12.4",
+    "styles": "^0.2.1",
+    "three": "^0.112.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "sass": "^1.24.3"
+  }
+}
