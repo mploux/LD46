@@ -46,7 +46,7 @@ class EntityManager
         this.entities.splice(index, 1); 
     }
 
-    getFirstEntityLat(position, radius, ignoreDead = false, maxDistance = 10)
+    getFirstEntityLat(position, radius, ignorehittable = false, maxDistance = 10)
     {
         console.log(position);
         let finalEntity = null;
@@ -64,14 +64,14 @@ class EntityManager
                 
                 console.log("DISTANCE: " + distance);
                 if (finalEntity === null)
-                    if (!(ignoreDead && entity.isDead()))
+                    if (!(!ignorehittable && entity.isDead()))
                         if (distance < maxDistance)
                             finalEntity = entity;
                 
                 // Getting the highest Z position
                 if (finalEntity && epos.z > finalEntity.getPosition().z && epos.z < position.z)
                 {
-                    if (!(ignoreDead && entity.isDead()))
+                    if (!(!ignorehittable && entity.isDead()))
                     {
                         if (distance < maxDistance)
                             finalEntity = entity;

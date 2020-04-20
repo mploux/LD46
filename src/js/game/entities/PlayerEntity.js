@@ -21,7 +21,7 @@ class PlayerEntity extends Entity
 
         this.light = false;
         this.shoot = false;
-        this.shootTime = 0;
+        this.shootTime = Date.now();
         this.shootCoolDown = 0;
 
         this.initFlashLight();
@@ -34,6 +34,25 @@ class PlayerEntity extends Entity
     update()
     {
         super.update();
+
+        if (Input.getKey("e") && !this.light && this.lightState === 0)
+            this.lightState = 2;
+        if (Input.getKey("e") && this.light && this.lightState === 0)
+            this.lightState = 1;
+        if (!Input.getKey("e") && this.lightState > 0)
+        {
+            this.light = this.lightState === 2;
+            this.lightState = 0;
+            let audio = AudioManager.newAudio("flashlight");
+            audio.setVolume(4);
+            audio.play();
+            Dom.get("#flashlight").style.display = "none";
+            this.game.start();
+        }
+
+        if (!this.game.isStarted() || this.dead)
+            return;
+
         let speed = 0.025;
 
         if (this.shootCoolDown > 0)
@@ -47,21 +66,6 @@ class PlayerEntity extends Entity
         {
             this.velocity.x = speed;
         }
-        if (Input.getKey("e") && !this.light && this.lightState === 0)
-            this.lightState = 2;
-        if (Input.getKey("e") && this.light && this.lightState === 0)
-            this.lightState = 1;
-
-        if (!Input.getKey("e") && this.lightState > 0)
-        {
-            this.light = this.lightState === 2;
-            this.lightState = 0;
-            let audio = AudioManager.newAudio("flashlight");
-            audio.setVolume(4);
-            audio.play();
-            Dom.get("#flashlight").style.display = "none";
-        }
-
         if (Input.getKey(" ") && ! this.shoot && this.shootCoolDown === 0)
         {
             this.shoot = true;
@@ -71,7 +75,7 @@ class PlayerEntity extends Entity
             let audio = AudioManager.newAudio("fire");
             audio.play();
 
-            let shotEntity = this.game.getEntityManager().getFirstEntityLat(this.getPosition(), 0.5, true, 15);
+            let shotEntity = this.game.getEntityManager().getFirstEntityLat(this.getPosition(), 0.5, false, 15);
             if (shotEntity)
             {
                 shotEntity.applyDamage(1);
@@ -128,7 +132,7 @@ class PlayerEntity extends Entity
         this.lightState = 0;
         this.lightIntensity = 3;
 
-        this.spotLight = new THREE.SpotLight(0xffffff, this.lightIntensity);
+        this.spotLight = new THREE.SpotLight(0xffffff, 0);
         this.spotLight.angle = 0.6;
         this.spotLight.distance = 20;
         this.spotLight.penumbra = 1;
@@ -153,7 +157,7 @@ class PlayerEntity extends Entity
 
     initShootLight()
     {
-        this.shootLight = new THREE.SpotLight(0xffffaa, 10);
+        this.shootLight = new THREE.SpotLight(0xffffaa, 0);
         this.shootLight.angle = 1.5;
         this.shootLight.distance = 20;
         this.shootLight.penumbra = 1;

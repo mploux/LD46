@@ -4,7 +4,9 @@ import Dom from "../../Dom";
 import AudioManager from "../../audio/AudioManager";
 
 export const EntityType = {
-    ZOMBIE: "zombie"
+    ZOMBIE: "zombie",
+    ROCK: "rock",
+    TREE: "tree",
 }
 
 class Entity
@@ -19,6 +21,7 @@ class Entity
         this.textureSize = textureSize;
         this.type = type;
         this.dead = false;
+        this.hittable = false;
         this.time = 0;
         this.animationTime = Math.round(Math.random() * 60);
         this.life = 10;
@@ -68,17 +71,29 @@ class Entity
         this.game.add(this.renderer.getMeshShadow());
     }
 
+    add(e)
+    {
+        this.renderer.getMesh().add(e);  
+    }
+
     killPlayer()
     {
         this.game.getPlayer().die();
         Dom.get("#deadMenu").style.display = "block";
-        AudioManager.getAudio("main_theme").stop();
+        // AudioManager.getAudio("main_theme").stop();
+        this.game.stopMusic();
+        console.log("Killed by: " + this.type);
     }
 
     die()
     {
-        if (this.type != "player")
-            this.game.addKill();
+        if (this.type === "player")
+        {
+            this.setTextureOffset(2, 0);
+            this.dead = true;
+            return
+        }
+        this.game.addKill();
         this.dead = true;
     }
 

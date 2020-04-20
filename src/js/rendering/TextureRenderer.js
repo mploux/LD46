@@ -31,8 +31,17 @@ class TextureRenderer
         geometry.faceVertexUvs[0][5] = [ emptyFace, emptyFace, emptyFace ];
         geometry.faceVertexUvs[0][7] = [ emptyFace, emptyFace, emptyFace ];
         geometry.faceVertexUvs[0][6] = [ emptyFace, emptyFace, emptyFace ];
-        // geometry.faceVertexUvs[0][8] = [ emptyFace, emptyFace, emptyFace ];
-        // geometry.faceVertexUvs[0][9] = [ emptyFace, emptyFace, emptyFace ];
+        
+        geometry.faceVertexUvs[0][8] = [ 
+            new THREE.Vector3(0, 0.98),
+            new THREE.Vector3(0, 0),
+            new THREE.Vector3(0.98, 0.98) 
+        ];
+        geometry.faceVertexUvs[0][9] = [ 
+            new THREE.Vector3(0, 0),
+            new THREE.Vector3(0.98, 0),
+            new THREE.Vector3(0.98, 0.98) 
+        ];
 
         geometry.faceVertexUvs[0][10] = [ emptyFace, emptyFace, emptyFace ];
         geometry.faceVertexUvs[0][11] = [ emptyFace, emptyFace, emptyFace ];

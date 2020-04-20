@@ -1,5 +1,7 @@
 import { EntityType } from "./entities/Entity";
 import ZombieEntity from "./entities/ZombieEntity";
+import RockEntity from "./entities/RockEntity";
+import TreeEntity from "./entities/TreeEntity";
 import * as THREE from "three";
 
 class Spawner
@@ -30,6 +32,12 @@ class Spawner
         {
             case EntityType.ZOMBIE:
                 this.entityManager.add(new ZombieEntity(this.entityManager.game, position));
+            return;
+            case EntityType.ROCK:
+                this.entityManager.add(new RockEntity(this.entityManager.game, position));
+            return;
+            case EntityType.TREE:
+                this.entityManager.add(new TreeEntity(this.entityManager.game, position));
             return;
         }
     }

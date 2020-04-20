@@ -3,6 +3,8 @@ import * as THREE from "three";
 import Entity from "./Entity";
 import { Textures } from "../Game";
 
+import AudioManager from "../../audio/AudioManager";
+
 class ZombieEntity extends Entity
 {
     constructor(game, position)
@@ -17,18 +19,28 @@ class ZombieEntity extends Entity
         );
         
         this.life = 3;
+        this.hittable = true;
 
         const rand = Math.floor(Math.random() * 4);
         console.log(rand);
         this.zombieType = rand;
         this.setTextureOffset(this.zombieType, 1);
         this.latSpeed = Math.random();
+        this.soundRandom = Math.random();
     }
 
     update()
     {
         super.update();
-        
+        console.log(this.soundRandom);
+        if (this.animationTime % Math.round(60 + this.soundRandom * 60) === 0)
+        {
+            let audio = AudioManager.newPositionalAudio("zombie1");
+            this.add(audio);
+            audio.play();
+            this.soundRandom = Math.random();
+        }
+
         if (this.life === 3)
         {
             this.setTextureOffset(this.zombieType, this.animationTime % 60 < 30 ? 1 : 2);
@@ -54,7 +66,10 @@ class ZombieEntity extends Entity
         if (this.life < 2)
             this.setTextureOffset(this.zombieType, 4);
         if (this.dead)
+        {
             this.setTextureOffset(this.zombieType, 5);
+            this.hittable = false;
+        }
         
         if (this.isCloseToPlayer(0.5) && !this.dead)
             this.killPlayer();

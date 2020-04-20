@@ -14,24 +14,17 @@ class Camera {
 
         this.listener = new THREE.AudioListener();
         this.camera.add(this.listener);
+    }
 
-        // var sound = new THREE.Audio(this.listener);
-
-        // var audioLoader = new THREE.AudioLoader();
-
-        // //Load a sound and set it as the Audio object's buffer
-        // audioLoader.load(require("../../assets/sounds/main_theme.mp3"), function( buffer ) {
-        //     sound.setBuffer( buffer );
-        //     sound.setLoop(true);
-        //     sound.setVolume(0.01);
-        //     sound.play();
-        // }, undefined, undefined);
+    onResize()
+    {
+        console.log("Resize");
+        this.camera.aspect = this.renderer.getWidth() / this.renderer.getHeight();
+        this.camera.updateProjectionMatrix();
     }
 
     update()
     {
-        // this.camera.aspect = this.renderer.getWidth() / this.renderer.getHeight();
-        // this.camera.updateProjectionMatrix();
     }
 
     getCamera() {

@@ -30,6 +30,7 @@ class Main
         Dom.get("#restart").addEventListener("click", () => {
             Dom.get("#deadMenu").style.display = "none";
             Dom.get("#game_center").style.display = "block";
+            Dom.get("#flashlight").style.display = "block";
             AudioManager.clearAudios();
             this.game = new Game(this.renderer);
         })
@@ -59,6 +60,8 @@ class Main
     onResize()
     {
         this.renderer.onResize();
+        if (this.game)
+            this.game.onResize();
     }
 
     start()
@@ -67,6 +70,8 @@ class Main
         this.running = true;
         this.lastTime = performance.now();
         this.initEvents();
+        this.renderer.onResize();
+        this.game.onResize();
         requestAnimationFrame(() => this.loop());
     }
 
