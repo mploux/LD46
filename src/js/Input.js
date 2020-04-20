@@ -1,4 +1,3 @@
-
 class Input
 {
     constructor()
@@ -16,16 +15,18 @@ class Input
     {
         if (this.keys[key] !== undefined)
             return this.keys[key];
-            this.keys[key] = false;
+        this.keys[key] = false;
     }
     
     onKeyDown(e)
     {
+        e.preventDefault();
         this.keys[e.key] = true;
     }
     
     onKeyUp(e)
     {
+        e.preventDefault();
         this.keys[e.key] = false;
     }
 }

@@ -1,10 +1,9 @@
 {
-  "name": "LD46",
+  "name": "RunZ",
   "version": "1.0.0",
   "main": "index.html",
   "repository": "git@github.com:mploux/LD46.git",
   "author": "mploux <mploux@student.42.fr>",
-  "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html"

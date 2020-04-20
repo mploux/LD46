@@ -7,6 +7,7 @@ import EntityManager from "./EntityManager";
 import Spawner from "./Spawner";
 import { EntityType } from "./entities/Entity";
 import Dom from "../Dom";
+import AudioManager from "../audio/AudioManager";
 
 export const Textures = {
     GROUND: new THREE.TextureLoader().load(require("../../assets/textures/ground.png")),
@@ -24,14 +25,25 @@ class Game
         this.scene = new THREE.Scene();
         this.camera = new Camera(75, 0.1, 1000, this.renderer);
         this.camera.getPosition().set(0, 1.2, 0);
-        this.speed = 0.02; //0.08;
+        
+        AudioManager.setListener(this.camera.getListener());
+
+        AudioManager.bindAudio("main_theme");
+        // AudioManager.bindAudio("fire");
+        // AudioManager.bindAudio("flashlight");
+
+        AudioManager.getAudio("main_theme").setVolume(1);
+        AudioManager.getAudio("main_theme").setLoop(true);
+        AudioManager.getAudio("main_theme").play();
+
+        this.speed = 0.04; //0.08;
         this.time = 0;
         this.clock = new THREE.Clock();
         this.clock.start();
         this.score = 0;
         this.kills = 0;
 
-        let ambient = new THREE.AmbientLight( 0xffffff, 0.3);
+        let ambient = new THREE.AmbientLight( 0xffffff, 0.2);
         this.add(ambient);
 
         this.entityManager = new EntityManager(this);
@@ -71,11 +83,19 @@ class Game
             this.time += this.clock.getDelta();
     
             if (this.speed < 0.11)
-                this.speed += 0.00001;
+                this.speed += 0.00004;
+
+            if (this.player.hasFlashLight())
+            {
+                this.scene.fog.far = 30;
+            }
+            else
+            {
+                this.scene.fog.far = 15;
+            }
         }
 
         Dom.get("#score").innerText = "Score: " + this.getScore();
-        Dom.get("#deathScore").innerText = "Score: " + this.getScore();
         Dom.get("#distance").innerText = "Distance: " + Math.ceil(-this.player.getPosition().z) + "m";
         Dom.get("#kills").innerText = "Kills: " + this.kills;
     }

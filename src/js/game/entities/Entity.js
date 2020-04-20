@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import TextureRenderer from "../../rendering/TextureRenderer";
+import Dom from "../../Dom";
+import AudioManager from "../../audio/AudioManager";
 
 export const EntityType = {
     ZOMBIE: "zombie"
@@ -64,6 +66,13 @@ class Entity
     {
         this.game.add(this.renderer.getMesh());
         this.game.add(this.renderer.getMeshShadow());
+    }
+
+    killPlayer()
+    {
+        this.game.getPlayer().die();
+        Dom.get("#deadMenu").style.display = "block";
+        AudioManager.getAudio("main_theme").stop();
     }
 
     die()

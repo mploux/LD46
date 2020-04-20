@@ -3,13 +3,13 @@ import Renderer from "./rendering/Renderer";
 import Dom from "./Dom";
 import Game from "./game/Game";
 import Input from "./Input";
+import AudioManager from "./audio/AudioManager";
 
 class Main
 {
     constructor(rendererElementName)
     {
         this.rendererElement = Dom.get("#" + rendererElementName);
-    
         this.renderer = new Renderer(this.rendererElement);
         this.renderer.bind();
 
@@ -19,12 +19,18 @@ class Main
         })
         Dom.get("#start").addEventListener("click", () => {
             Dom.get("#controlsMenu").style.display = "none";
-            Dom.get("#game_center").style.display = "block";
-            this.start();
+            Dom.get("#loading").style.display = "block";
+            AudioManager.loadSounds().then(() => {
+                Dom.get("#loading").style.display = "none";
+                Dom.get("#game_center").style.display = "block";
+                this.game = new Game(this.renderer);
+                this.start();
+            })
         })
         Dom.get("#restart").addEventListener("click", () => {
             Dom.get("#deadMenu").style.display = "none";
             Dom.get("#game_center").style.display = "block";
+            AudioManager.clearAudios();
             this.game = new Game(this.renderer);
         })
     }
@@ -57,8 +63,6 @@ class Main
 
     start()
     {
-        this.game = new Game(this.renderer);
-
         Dom.get("#header").style.display = "block";
         this.running = true;
         this.lastTime = performance.now();
@@ -76,14 +80,10 @@ class Main
         if (!this.running)
             return;
 
-        const frameCap = 60;
-
         this.update();
         this.render();
 
-        setTimeout( () => {
-            requestAnimationFrame(() => this.loop());
-        }, 1000.0 / frameCap );
+        requestAnimationFrame(() => this.loop());
     }
 
     initEvents()

@@ -11,6 +11,21 @@ class Camera {
         this.camera = new THREE.PerspectiveCamera(
             this.fov, this.aspect, this.near, this.far
         );
+
+        this.listener = new THREE.AudioListener();
+        this.camera.add(this.listener);
+
+        // var sound = new THREE.Audio(this.listener);
+
+        // var audioLoader = new THREE.AudioLoader();
+
+        // //Load a sound and set it as the Audio object's buffer
+        // audioLoader.load(require("../../assets/sounds/main_theme.mp3"), function( buffer ) {
+        //     sound.setBuffer( buffer );
+        //     sound.setLoop(true);
+        //     sound.setVolume(0.01);
+        //     sound.play();
+        // }, undefined, undefined);
     }
 
     update()
@@ -45,6 +60,10 @@ class Camera {
 
     getFar() {
         return this.far;
+    }
+
+    getListener() {
+        return this.listener;
     }
 }
 

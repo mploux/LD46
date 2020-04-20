@@ -4,6 +4,7 @@ import Entity from "./Entity";
 import { Textures } from "../Game";
 import Input from "../../Input";
 import Dom from "../../Dom";
+import AudioManager from "../../audio/AudioManager";
 
 class PlayerEntity extends Entity
 {
@@ -21,6 +22,7 @@ class PlayerEntity extends Entity
         this.light = false;
         this.shoot = false;
         this.shootTime = 0;
+        this.shootCoolDown = 0;
 
         this.initFlashLight();
         this.initShootLight();
@@ -34,11 +36,14 @@ class PlayerEntity extends Entity
         super.update();
         let speed = 0.025;
 
-        if (Input.getKey("q") || Input.getKey("a"))
+        if (this.shootCoolDown > 0)
+            this.shootCoolDown--;
+
+        if (Input.getKey("q") || Input.getKey("a") || Input.getKey("ArrowLeft"))
         {
             this.velocity.x = -speed;
         }
-        if (Input.getKey("d"))
+        if (Input.getKey("d") || Input.getKey("ArrowRight"))
         {
             this.velocity.x = speed;
         }
@@ -51,14 +56,20 @@ class PlayerEntity extends Entity
         {
             this.light = this.lightState === 2;
             this.lightState = 0;
+            let audio = AudioManager.newAudio("flashlight");
+            audio.setVolume(4);
+            audio.play();
             Dom.get("#flashlight").style.display = "none";
         }
 
-        if (Input.getKey(" ") && ! this.shoot)
+        if (Input.getKey(" ") && ! this.shoot && this.shootCoolDown === 0)
         {
             this.shoot = true;
-            console.log("shoot");
             this.shootTime = Date.now();
+            this.shootCoolDown = 15;
+
+            let audio = AudioManager.newAudio("fire");
+            audio.play();
 
             let shotEntity = this.game.getEntityManager().getFirstEntityLat(this.getPosition(), 0.5, true, 15);
             if (shotEntity)
@@ -163,6 +174,11 @@ class PlayerEntity extends Entity
             this.position.y + 0.55,
             this.position.z - 10
         );
+    }
+
+    hasFlashLight()
+    {
+        return this.light;
     }
 
     addToGame()
