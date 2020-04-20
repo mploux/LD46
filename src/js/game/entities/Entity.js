@@ -78,6 +78,10 @@ class Entity
 
     killPlayer()
     {
+        if (!this.game.getPlayer().isDead())
+        {
+            AudioManager.newAudio("scream").play();
+        }
         this.game.getPlayer().die();
         Dom.get("#deadMenu").style.display = "block";
         // AudioManager.getAudio("main_theme").stop();

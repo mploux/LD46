@@ -22,32 +22,27 @@ class ZombieEntity extends Entity
         this.hittable = true;
 
         const rand = Math.floor(Math.random() * 4);
-        console.log(rand);
         this.zombieType = rand;
         this.setTextureOffset(this.zombieType, 1);
         this.latSpeed = Math.random();
         this.soundRandom = Math.random();
+        this.audioClipRandom = Math.round(Math.random() * 4);
+        console.log(this.audioClipRandom);
     }
 
     update()
     {
         super.update();
-        console.log(this.soundRandom);
-        if (this.animationTime % Math.round(60 + this.soundRandom * 60) === 0)
-        {
-            let audio = AudioManager.newPositionalAudio("zombie1");
-            this.add(audio);
-            audio.play();
-            this.soundRandom = Math.random();
-        }
 
         if (this.life === 3)
         {
             this.setTextureOffset(this.zombieType, this.animationTime % 60 < 30 ? 1 : 2);
             this.moveLat(Math.sin(this.animationTime * 0.01 * this.latSpeed) * 0.005);
         
+            this.attacking = false;
             if (this.game.getPlayer().hasFlashLight())
             {
+                this.attacking = true;
                 let distToPlayer = Math.abs(this.game.getPlayer().getPosition().z - this.getPosition().z) * 0.15;
                 if (distToPlayer < 0.5)
                     distToPlayer = 0.5;
@@ -57,7 +52,15 @@ class ZombieEntity extends Entity
                     finalLatMovement = 0.15;
                 this.moveLat(finalLatMovement);
                 this.getPosition().z -= finalLatMovement;
-                // this.getPosition().z += distToPlayer * 0.015;
+
+                if (this.time % Math.round(120 + this.soundRandom * 60) === 0)
+                {
+                    this.audio = AudioManager.newPositionalAudio("zombieB" + this.audioClipRandom);
+                    this.add(this.audio);
+                    this.audio.setVolume(this.soundRandom);
+                    this.audio.play();
+                    this.soundRandom = Math.random();
+                }
             }
         }
 
@@ -69,6 +72,19 @@ class ZombieEntity extends Entity
         {
             this.setTextureOffset(this.zombieType, 5);
             this.hittable = false;
+            if (this.audio)
+                this.audio.stop();
+        }
+        else
+        {
+            if (this.animationTime % Math.round(120 + this.soundRandom * 60) === 0 && !this.attacking)
+            {
+                this.audio = AudioManager.newPositionalAudio("zombieA" + this.audioClipRandom);
+                this.add(this.audio);
+                this.audio.setVolume(this.soundRandom);
+                this.audio.play();
+                this.soundRandom = Math.random();
+            }
         }
         
         if (this.isCloseToPlayer(0.5) && !this.dead)

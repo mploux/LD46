@@ -8,13 +8,23 @@ class AudioManager
         this.audios = {};
         return new Promise((resolve, reject) => {
             this.loader = new THREE.AudioLoader();
-            
             return this.loadSound("fire", require("../../assets/sounds/Fire.mp3"))
                 .then(() => {return this.loadSound("flashlight", require("../../assets/sounds/Flashlight.mp3"))})
                 .then(() => {return this.loadSound("loop", require("../../assets/sounds/LOOP.mp3"))})
                 .then(() => {return this.loadSound("mid", require("../../assets/sounds/MID.mp3"))})
                 .then(() => {return this.loadSound("intro", require("../../assets/sounds/INTRO.mp3"))})
-                .then(() => {return this.loadSound("zombie1", require("../../assets/sounds/ZombieHitTest.mp3"))})
+
+                .then(() => {return this.loadSound("zombieA1", require("../../assets/sounds/ZombieA1.mp3"))})
+                .then(() => {return this.loadSound("zombieA2", require("../../assets/sounds/ZombieA2.mp3"))})
+                .then(() => {return this.loadSound("zombieA3", require("../../assets/sounds/ZombieA3.mp3"))})
+                .then(() => {return this.loadSound("zombieA4", require("../../assets/sounds/ZombieA4.mp3"))})
+                .then(() => {return this.loadSound("zombieB1", require("../../assets/sounds/ZombieB1.mp3"))})
+                .then(() => {return this.loadSound("zombieB2", require("../../assets/sounds/ZombieB2.mp3"))})
+                .then(() => {return this.loadSound("zombieB3", require("../../assets/sounds/ZombieB3.mp3"))})
+                .then(() => {return this.loadSound("zombieB4", require("../../assets/sounds/ZombieB4.mp3"))})
+
+                .then(() => {return this.loadSound("scream", require("../../assets/sounds/Scream.mp3"))})
+                
                 .then(() => {return resolve();});
         })
     }
